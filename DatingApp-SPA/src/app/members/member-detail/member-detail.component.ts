@@ -32,7 +32,6 @@ export class MemberDetailComponent implements OnInit {
         preview: false
       }
     ];
-
     this.galleryImages = this.getImages();
   }
 
@@ -47,6 +46,11 @@ export class MemberDetailComponent implements OnInit {
       });
     }
     return imageUrls;
+  }
+
+  isPic() {
+    if (this.user.photoUrl == null) { return false; }
+    return true;
   }
 
   // members/3

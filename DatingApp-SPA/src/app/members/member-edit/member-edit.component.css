@@ -19,3 +19,13 @@
     font-weight: bold;
     padding-bottom: 10px;
 }
+
+.col-sm-3 h1 {
+    text-align: center;
+    font-weight: 200;
+}
+
+.mainPhoto {
+    height: 215px;
+    width: 215px;
+}

@@ -33,3 +33,11 @@
 .animate {
     transition: all 0.3s ease-in-out;
 }
+
+.card-body {
+    font-weight: bold;
+}
+
+.card-body h6 {
+    font-weight: bold
+}
