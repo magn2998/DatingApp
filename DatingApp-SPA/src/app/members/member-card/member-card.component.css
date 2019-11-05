@@ -41,3 +41,7 @@
 .card-body h6 {
     font-weight: bold
 }
+
+.like {
+    background-color: green;
+}

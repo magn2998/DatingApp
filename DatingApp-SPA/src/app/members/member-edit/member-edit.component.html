@@ -33,6 +33,7 @@
         </div>
         <div class="card-footer">
           <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">Save Changes</button>
+          <button (click)="deleteProfile()" class="btn btn-danger btn-block">Delete Profile</button>
         </div>
       </div>
     </div>

@@ -1,0 +1,46 @@
+<div class="container" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div class="col-7">
+        <form [formGroup]="registerForm" (ngSubmit)="createPost()">
+            <h2 class="text-center text-primary">Create a Post</h2>
+            <!-- Title -->  
+            <div class="form-group">
+              <input type="text" class="form-control titel" 
+              [ngClass]="{'is-invalid': registerForm.get('title').errors && registerForm.get('title').touched}"
+              formControlName="title" placeholder="Title">
+              <div class="invalid-feedback titleNsection" *ngIf="registerForm.get('title').touched && registerForm.get('title').hasError('required')">Please Choose a title</div>
+              <div class="invalid-feedback titleNsection" *ngIf="registerForm.get('title').hasError('maxlength') && registerForm.get('title').touched">Title name cannot exceed 12 characters</div>
+            </div>
+          
+            <!-- Content --> 
+            <div class="form-group">
+              <textarea [ngClass]="{'is-invalid': registerForm.get('content').errors && registerForm.get('content').touched}" 
+                class="form-control" placeholder="Content" formControlName="content" cols="40" rows="5" 
+                  [style.font-weight]="registerForm.get('content').hasError('required') ? 'bold' : 'normal'"
+                  [style.text-align]="registerForm.get('content').hasError('required') ? 'center' : 'left'">
+              </textarea>
+              <div class="invalid-feedback titleNsection" *ngIf="registerForm.get('content').touched && registerForm.get('content').hasError('required')">content is required</div>
+              <div class="invalid-feedback titleNsection" *ngIf="registerForm.get('content').hasError('maxlength') && registerForm.get('content').touched">You've reached the posting limit of 2400 characters</div>
+            </div>
+          
+          
+            <!-- Section --> 
+            <div class="form-group">
+              <input type="text" class="form-control titleNsection" 
+              [ngClass]="{'is-invalid': registerForm.get('section').errors && registerForm.get('section').touched}"
+              formControlName="section" placeholder="Section">
+              <div class="invalid-feedback titleNsection" *ngIf="registerForm.get('section').hasError('required') && registerForm.get('section').touched">Section is required</div>
+            </div>
+        
+          
+            <!-- Submission --> 
+            <div class="form-group text-center">
+              <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid">Upload</button>
+              <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
+            </div>
+            
+          </form>
+          
+    </div>
+  </div>
+</div>

@@ -11,15 +11,36 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 })
 export class MemberCardComponent implements OnInit {
   @Input() user: User;
+  likedUsers: number[] = [];
 
   constructor(private authService: AuthService, private userService: UserService, private alertify: AlertifyService) { }
 
   ngOnInit() {
+    this.userService.getLikers(this.authService.decodedToken.nameid).subscribe((data: number[]) => {
+      this.likedUsers = data;
+      this.likedUsers.forEach(elem => {
+        if (elem === this.user.id) {
+          this.user.isLiked = true;
+        }
+      });
+    }, error => {
+      this.alertify.error(error);
+    });
   }
 
   sendLike(id: number) {
     this.userService.sendLike(this.authService.decodedToken.nameid, id).subscribe(data => {
-      this.alertify.success('You Have Liked ' + this.user.knownAs);
+      if (!data) {
+        this.alertify.success('You Have Liked ' + this.user.knownAs); this.user.isLiked = true; } else {
+        this.alertify.error('You Have Disliked ' + this.user.knownAs); this.user.isLiked = false; }
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
+
+  getLikers() {
+    this.userService.getLikers(this.authService.decodedToken.nameid).subscribe((data: number[]) => {
+      this.likedUsers = data;
     }, error => {
       this.alertify.error(error);
     });

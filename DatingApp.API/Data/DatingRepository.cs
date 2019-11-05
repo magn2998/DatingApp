@@ -141,5 +141,36 @@ namespace DatingApp.API.Data
                 .ToListAsync();
             return messages;
         }
+
+        public async Task<IEnumerable<Like>> GetuserLikers(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            user.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
+
+            return user.Likees;
+        }
+
+        public void DeleteUser(int id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+
+            foreach (var like in user.Likees)
+            {
+                _context.Remove(like);
+            }
+            foreach (var liker in user.Likers)
+            {
+                _context.Remove(liker);
+            }
+            foreach (var messageSent in user.MessagesSent)
+            {
+                _context.Remove(messageSent);
+            }
+            foreach (var messageRes in user.MessagesRecieved)
+            {
+                _context.Remove(messageRes);
+            }
+        }
     }
 }

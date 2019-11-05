@@ -1,0 +1,22 @@
+.form-control {
+    text-align: center;
+    font-weight: bold;
+}
+
+.titleNsection {
+    max-width: 150px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+body {
+    background-color: lightgray;
+}
+
+.titel {
+    max-width: 350px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}

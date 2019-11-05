@@ -16,10 +16,17 @@ namespace DatingApp.API.Data
 
         public DbSet<Like> Likes { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Profiles> Profiles { get; set; }
+        public DbSet<Posts> Posts { get; set; }
+        public DbSet<Comments> Comments { get; set; }
+        public DbSet<Postlike> Postlike { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
             builder.Entity<Like>()
                 .HasKey(k => new {k.LikerId, k.LikeeId});
+
+            builder.Entity<Postlike>()
+                .HasKey(k => new {k.LikerId, k.PostId});
                 
             builder.Entity<Like>()
                 .HasOne(u => u.Likee)
@@ -41,6 +48,33 @@ namespace DatingApp.API.Data
             builder.Entity<Message>()
                 .HasOne(u => u.Recipient)
                 .WithMany(m => m.MessagesRecieved)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Posts>()
+                .HasOne(u => u.Profile)
+                .WithMany(m => m.Posts)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            builder.Entity<Comments>()
+                .HasOne(u => u.Profile)
+                .WithMany(m => m.Comments)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Comments>()
+                .HasOne(u => u.Post)
+                .WithMany(m => m.PostComments)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            builder.Entity<Postlike>()
+                .HasOne(u => u.Liker)
+                .WithMany(u => u.PostLikes)
+                .HasForeignKey(u => u.LikerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Postlike>()
+                .HasOne(u => u.Post)
+                .WithMany(u => u.PostLikers)
+                .HasForeignKey(u => u.PostId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

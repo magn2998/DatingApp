@@ -12,14 +12,24 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolve';
 import { PreventUnsavedChanges } from './_guards/prevent-unsafed-changes.guard';
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
+import { ProfregisterComponent } from './profregister/profregister.component';
+import { FrontpageComponent } from './frontpage/frontpage.component';
+import { PostCreationComponent } from './postCreation/postCreation.component';
+import { PostCreationResolver } from './_resolvers/postcreation.resolver';
+import { PostResolver } from './_resolvers/post.resolver';
+import { PostsComponent } from './posts/posts.component';
 
 export const appRoutes: Routes = [
-    {path: '', component: HomeComponent},
+    {path: '', component: FrontpageComponent},
+    {path: 'register', component: ProfregisterComponent},
     {
         path: '',
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children: [
+            {path: 'createPost', component: PostCreationComponent,
+                resolve: {profile: PostCreationResolver}},
+            {path: 'post/:id', component: PostsComponent, resolve: {profile: PostResolver}},
             {path: 'members', component: MemberListComponent, resolve: {users: MemberListResolver}},
             {path: 'member/edit', component: MemberEditComponent,
                 resolve: {user: MemberEditResolver}, canDeactivate: [PreventUnsavedChanges]},

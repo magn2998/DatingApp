@@ -1,0 +1,16 @@
+<div class="postContainer">
+  <p style="margin-left: 10px;">{{post?.title}}</p>
+  <div class="vote">
+    <p *ngIf="post?.profileAction == null"> <a (click)="clickOp()">Like</a> | <a (click)="clickDown()">Dislike</a></p>
+    <p *ngIf="post?.profileAction == 'dislike'"> <a (click)="clickOp()">Like</a> | <a (click)="clickDown()" style="color: blue">Dislike</a></p>
+    <p *ngIf="post?.profileAction == 'like'"> <a (click)="clickOp()" style="color: green">Like</a> | <a (click)="clickDown()">Dislike</a></p>
+    <div class="pointScore">
+      <p> {{score}} </p>
+    </div>
+  </div>
+  
+  <div class="contNekstra">
+    <p class="contentContainer">{{post?.content}}</p>
+    <p class="contNekstraP">{{post?.profileProfileName}} || {{post?.created | date:"dd/MM/yyyy"}}</p>
+  </div>
+</div>

@@ -30,9 +30,11 @@
 
   <!-- Date of Birth --> 
   <div class="form-group">
-    <input [ngClass]="{'is-invalid': registerForm.get('dateOfBirth').errors && registerForm.get('dateOfBirth').touched}" class="form-control"
+    <input [ngClass]="{'is-invalid': registerForm.get('dateOfBirth').errors && registerForm.get('dateOfBirth').touched ||
+    registerForm.hasError('mismatchTwo') && registerForm.get('dateOfBirth').touched}" class="form-control"
       placeholder="Date of Birth" formControlName="dateOfBirth" type="text" bsDatepicker [bsConfig]="bsConfig">
     <div class="invalid-feedback" *ngIf="registerForm.get('dateOfBirth').touched && registerForm.get('dateOfBirth').hasError('required')">Date of Birth is required</div>
+    <div class="invalid-feedback" *ngIf="registerForm.hasError('mismatchTwo') && registerForm.get('dateOfBirth').touched">You Must be older then 13 to create an account</div>
   </div>
 
   <!-- City and Country --> 
@@ -55,7 +57,7 @@
     formControlName="password" placeholder="Password">
     <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">Password is required</div>
     <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">Password must be atleast 4 characters</div>
-    <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">Password cannot exceed 8 characters</div>
+    <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">Password cannot exceed 16 characters</div>
   </div>
 
   <!-- ConfirmPassword --> 

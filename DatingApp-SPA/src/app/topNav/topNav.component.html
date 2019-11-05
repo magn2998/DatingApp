@@ -1,0 +1,33 @@
+<div class="navbar navBox">
+  <div class="navLogin">
+    <img src="{{'../../assets/user.png'}}">
+    <div class="navLoginItems" *ngIf="!loginDisplay && !loggedIn()">
+      <p class="pageLink" (click)="showLogin()"><strong>Login</strong></p>
+      <p class="pageLink" (click)="createAccount()" style="font-size: 40%; margin-top: 3px;">Create an Account</p>
+    </div>
+    <div class="navLoginDisplay" *ngIf="loginDisplay && !loggedIn()">
+      <input style="height: 35px" class="form-control mr-sm-2" type="text" name="username" placeholder="Username" required
+        [(ngModel)]="model.username">
+      <input  style="height: 35px" class="form-control" type="password" name="password" placeholder="Password" required
+        [(ngModel)]="model.password">
+      <div class="navLoginItems">
+        <p class="pageLink" style="font-size: 15px" (click)="login()"><strong>Login</strong></p>
+        <p class="pageLink" (click)="cancelLogin()" style="font-size: 40%; margin-top: 3px;">Cancel</p>
+      </div>
+    </div>
+    <div class="dropdown1" style="margin-bottom: 0px" *ngIf="loggedIn()">
+      <p class="dropbtn1">Welcome {{profauthService.decodedToken.family_name | titlecase}}</p>
+      <div class="dropdown-content1">
+        <a style="border-top: 2px solid black" href="#">Edit Profile</a>
+        <a (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+  <div class="navTitle" style="margin-left: auto; margin-right: auto" (click)="titleClick()">D-Light</div>
+  <div class="navLinks">
+    <div class="navLight">L</div>
+    <div class="navProfile" (click)="newPost()">P</div>
+    <div class="navMessages">M</div>
+  </div>
+</div>
+

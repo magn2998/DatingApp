@@ -26,7 +26,9 @@ getUsers(page?, itemsPerPage?, userParams?, likesParam?): Observable<PaginatedRe
     params = params.append('pageSize', itemsPerPage);
   }
 
-  if (userParams != null) {
+  if (userParams === 'all') {params = params.append('gender', userParams); }
+
+  if (userParams != null && userParams !== 'all') {
     params = params.append('minAge', userParams.minAge);
     params = params.append('maxAge', userParams.maxAge);
     params = params.append('gender', userParams.gender);
@@ -111,6 +113,14 @@ deleteMessage(id: number, userId: number) {
 
 markAsRead(userId: number, messageId: number) {
   this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + messageId + '/read', {}).subscribe();
+}
+
+getLikers(userId: number) {
+  return this.http.put(this.baseUrl + 'users/' + userId + '/likees', {});
+}
+
+deleteUser(userId: number) {
+  return this.http.delete(this.baseUrl + 'users/' + userId + '/delete');
 }
 
 }

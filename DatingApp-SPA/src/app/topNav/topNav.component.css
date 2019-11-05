@@ -1,0 +1,150 @@
+.navBox {
+    font-size: 135%;
+    background: grey;
+    border-bottom: 2px solid black;
+    padding-top: 0%;
+    padding-bottom: 0%;
+    min-height: 40px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.navLoginDisplay {
+    display: inline-flex;
+    margin-left: 10px;
+    height: 20px;
+}
+
+
+.createAccount {
+    font-size: 10%;
+}
+
+.pageLink {
+    cursor: pointer;
+    margin-top: 0px;
+}
+
+.pageLink:hover {
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.navLogin {
+    display: inline-flex;
+    min-height: 0%;
+}
+
+.navLoginItems p {
+    margin-bottom: 0px; 
+    margin-left: 5px;
+    font-size: 50%;
+    min-height: 0px;
+}
+
+img {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
+
+.navLinks {
+    display: inline-flex;
+    font-weight: bold;
+    text-align: center;
+    min-height: 40px;
+}
+
+.navLight {
+    background: blueviolet;
+    border: 2px solid black;
+    border-bottom: unset;
+    border-top: unset;
+    vertical-align: middle;
+    width: 50px;
+    margin-left: 20px;
+}
+
+.navProfile {
+    background: chartreuse;
+    border: 2px solid black;
+    border-bottom: unset;
+    border-top: unset;
+    align-content: center;
+    width: 50px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.navTitle {
+    cursor: pointer;
+}
+
+
+.navMessages {
+    background: darkgoldenrod;
+    border: 2px solid black;
+    border-bottom: unset;
+    border-top: unset;
+    width: 50px;
+    margin-left: 20px;
+}
+
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: grey;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown1 {
+    margin-left: 5px;
+    position: relative;
+    display: inline-block;
+    max-height: 40px;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content1 {
+    display: none;
+    position: center;
+    text-align: center;
+    background-color: grey;
+    min-width: 100px;
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content1 a {
+    color: black;
+    border: 2px solid black;
+    border-top: none;
+    text-align: center;
+    padding: 5px 10px;
+    font-size: 15px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+  }
+
+  .dropbtn1 {
+      margin-bottom: 0px;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content1 a:hover {background-color: grey;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown1:hover .dropdown-content1 {display: block;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown1:hover .dropbtn1 {background-color: grey; margin-bottom: 0px}

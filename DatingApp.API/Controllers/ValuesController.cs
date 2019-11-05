@@ -11,7 +11,7 @@ namespace DatingApp.API.Controllers
 {
     //http://localhost:500/api/values
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/{profileId}")]
     [ApiController]
     public class ValuesController : ControllerBase
     {

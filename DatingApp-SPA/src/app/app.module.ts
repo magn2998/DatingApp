@@ -34,6 +34,15 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { TopNavComponent } from './topNav/topNav.component';
+import { ProfregisterComponent } from './profregister/profregister.component';
+import { FrontpageComponent } from './frontpage/frontpage.component';
+import { PostsComponent } from './posts/posts.component';
+import { PostCreationComponent } from './postCreation/postCreation.component';
+import { PostCreationResolver } from './_resolvers/postcreation.resolver';
+import { PostResolver } from './_resolvers/post.resolver';
+import { PostCardComponent } from './postCard/postCard.component';
+import { HomepostComponent } from './homepost/homepost.component';
 
 
 
@@ -55,14 +64,24 @@ export class CustomHammerConfig extends HammerGestureConfig  {
       HomeComponent,
       RegisterComponent,
       MemberListComponent,
+      TopNavComponent,
       ListsComponent,
       MessagesComponent,
       MemberCardComponent,
+      FrontpageComponent,
+      ProfregisterComponent,
       MemberMessagesComponent,
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorComponent,
-      TimeAgoPipe
+      TimeAgoPipe,
+      TopNavComponent,
+      ProfregisterComponent,
+      FrontpageComponent,
+      PostsComponent,
+      PostCreationComponent,
+      PostCardComponent,
+      HomepostComponent
    ],
    imports: [
       BrowserModule,
@@ -80,12 +99,12 @@ export class CustomHammerConfig extends HammerGestureConfig  {
       FileUploadModule,
       JwtModule.forRoot({
          config: {
-            tokenGetter,
-            whitelistedDomains: ['localhost:5000'],
-            blacklistedRoutes: ['localhost:5000/api/auth']
+           tokenGetter,
+           whitelistedDomains: ['localhost:5000'],
+           blacklistedRoutes: ['localhost:5000/api/auth']
          }
-      })
-   ],
+       })
+     ],
    providers: [
       AuthService,
       ErrorInterceptorProvider,
@@ -93,6 +112,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
       AuthGuard,
       UserService,
       MemberDetailResolver,
+      PostCreationResolver,
+      PostResolver,
       MessagesResolver,
       ListsResolver,
       MemberEditResolver,
@@ -105,3 +126,14 @@ export class CustomHammerConfig extends HammerGestureConfig  {
    ]
 })
 export class AppModule { }
+
+/*
+JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:5000'],
+        blacklistedRoutes: ['localhost:5000/api/auth']
+      }
+    })
+  ],
+  */

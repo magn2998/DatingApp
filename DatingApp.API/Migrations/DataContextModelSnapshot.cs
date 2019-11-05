@@ -14,7 +14,36 @@ namespace DatingApp.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("DatingApp.API.Models.Comments", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CommentId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<int>("Dislikes");
+
+                    b.Property<int>("Likes");
+
+                    b.Property<int>("PostId");
+
+                    b.Property<int>("ProfileId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("Comments");
+                });
 
             modelBuilder.Entity("DatingApp.API.Models.Like", b =>
                 {
@@ -42,6 +71,10 @@ namespace DatingApp.API.Migrations
 
                     b.Property<DateTime>("MessageSent");
 
+                    b.Property<int?>("ProfilesId");
+
+                    b.Property<int?>("ProfilesId1");
+
                     b.Property<bool>("RecipientDeleted");
 
                     b.Property<int>("RecipientId");
@@ -51,6 +84,10 @@ namespace DatingApp.API.Migrations
                     b.Property<int>("SenderId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfilesId");
+
+                    b.HasIndex("ProfilesId1");
 
                     b.HasIndex("RecipientId");
 
@@ -81,6 +118,69 @@ namespace DatingApp.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("DatingApp.API.Models.Postlike", b =>
+                {
+                    b.Property<int>("LikerId");
+
+                    b.Property<int>("PostId");
+
+                    b.Property<string>("Reaction");
+
+                    b.HasKey("LikerId", "PostId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Postlike");
+                });
+
+            modelBuilder.Entity("DatingApp.API.Models.Posts", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<int>("PostId");
+
+                    b.Property<int>("ProfileId");
+
+                    b.Property<string>("Section");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("DatingApp.API.Models.Profiles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime>("LastActive");
+
+                    b.Property<byte[]>("PasswordHash");
+
+                    b.Property<byte[]>("PasswordSalt");
+
+                    b.Property<string>("ProfileDescription");
+
+                    b.Property<string>("ProfileName");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("DatingApp.API.Models.User", b =>
@@ -131,6 +231,19 @@ namespace DatingApp.API.Migrations
                     b.ToTable("Values");
                 });
 
+            modelBuilder.Entity("DatingApp.API.Models.Comments", b =>
+                {
+                    b.HasOne("DatingApp.API.Models.Posts", "Post")
+                        .WithMany("PostComments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DatingApp.API.Models.Profiles", "Profile")
+                        .WithMany("Comments")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("DatingApp.API.Models.Like", b =>
                 {
                     b.HasOne("DatingApp.API.Models.User", "Likee")
@@ -146,6 +259,14 @@ namespace DatingApp.API.Migrations
 
             modelBuilder.Entity("DatingApp.API.Models.Message", b =>
                 {
+                    b.HasOne("DatingApp.API.Models.Profiles")
+                        .WithMany("MessagesRecieved")
+                        .HasForeignKey("ProfilesId");
+
+                    b.HasOne("DatingApp.API.Models.Profiles")
+                        .WithMany("MessagesSent")
+                        .HasForeignKey("ProfilesId1");
+
                     b.HasOne("DatingApp.API.Models.User", "Recipient")
                         .WithMany("MessagesRecieved")
                         .HasForeignKey("RecipientId")
@@ -163,6 +284,27 @@ namespace DatingApp.API.Migrations
                         .WithMany("Photos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DatingApp.API.Models.Postlike", b =>
+                {
+                    b.HasOne("DatingApp.API.Models.Profiles", "Liker")
+                        .WithMany("PostLikes")
+                        .HasForeignKey("LikerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("DatingApp.API.Models.Posts", "Post")
+                        .WithMany("PostLikers")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("DatingApp.API.Models.Posts", b =>
+                {
+                    b.HasOne("DatingApp.API.Models.Profiles", "Profile")
+                        .WithMany("Posts")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

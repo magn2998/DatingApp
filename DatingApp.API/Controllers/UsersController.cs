@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Net;
+using System.Web.Http;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -58,6 +61,28 @@ namespace DatingApp.API.Controllers
             return Ok(userToReturn);
         }
 
+        [HttpPut("{id}/likees")]
+        public async Task<IActionResult> GetLikees(int id)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) 
+            {
+                return Unauthorized();
+            }
+            var likees = await _repo.GetuserLikers(id);
+
+            var likeesToReturn = _mapper.Map<IEnumerable<UserLikersDto>>(likees);
+
+            List<int> likeeList = new List<int>();
+
+            foreach (var item in likeesToReturn)
+            {
+                likeeList.Add(item.LikeeId);
+            }
+
+            return Ok(likeeList);
+        }
+
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto) 
         {
@@ -88,27 +113,54 @@ namespace DatingApp.API.Controllers
 
             var like = await _repo.GetLike(id, recipientId);
 
-            if (like != null) {
-                return BadRequest("You Already Like This User");
-            }
-
             if (await _repo.GetUser(recipientId) == null) {
                 return NotFound();
             }
 
-            like = new Like 
-            {
-                LikerId = id,
-                LikeeId = recipientId
-            };
+            bool dislike = false;
 
-            _repo.Add<Like>(like);
+            if (like != null) {
+                _repo.Delete<Like>(like);
+                dislike = true;
+            }
+            else {
+                like = new Like 
+                {
+                    LikerId = id,
+                    LikeeId = recipientId
+                };
+                _repo.Add<Like>(like);
+            }
 
             if (await _repo.SaveAll()) {
-                return Ok();
+                return Ok(dislike);
             }
 
             return BadRequest("Failed to Like User");
+
+        }
+
+        [HttpDelete("{id}/delete")]
+        public async Task<IActionResult> DeleteProfile(int id) 
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) 
+            {
+                return Unauthorized();
+            }
+
+            var user = await _repo.GetUser(id);
+
+            if (user == null) { return BadRequest("User Already Deleted"); }
+            
+            
+            _repo.DeleteUser(id);
+            _repo.Delete<User>(user);
+
+            if(await _repo.SaveAll()) 
+            {
+              return Ok(true);
+            }
+            return BadRequest("Failed to delete account");  
 
         }
     }

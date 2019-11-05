@@ -36,7 +36,7 @@ namespace DatingApp.API
         {
             services.AddDbContext<DataContext>(x => {
                 x.UseLazyLoadingProxies();
-                x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                x.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             }); 
             ConfigureServices(services);
         }
@@ -61,6 +61,7 @@ namespace DatingApp.API
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
                 options.TokenValidationParameters = new TokenValidationParameters

@@ -55,7 +55,7 @@ namespace DatingApp.API.Controllers
 
             if (userFromRepo == null)
             {
-                return Unauthorized();
+                return BadRequest("User And Password combination is invalid");
             }
 
             var claims = new[]
