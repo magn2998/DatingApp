@@ -1,0 +1,24 @@
+.container {
+    text-align: center;
+}
+
+.container h1{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.container img {
+    max-height: 200px;
+    border: 2px solid black;
+}
+
+
+.postButton {
+    width: 130px;
+}
+
+.contentTitle { 
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}

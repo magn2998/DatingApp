@@ -1,0 +1,62 @@
+<div class="container">
+  <h1>{{profile?.profileName}}</h1>
+  <div class="img"><img src="{{'../../../assets/user.png'}}"></div>
+  <p style="margin-top: 5px;">Profile Description</p>
+  <textarea id="profileDescription" rows="5">{{profile?.profileDescription}}</textarea>
+  <button id="profileDescriptionButton" (click)="updateDescription()">Update Description</button>
+
+  <h5 class="contentTitle">Profile Posts and Comments</h5>
+
+  <div class="btn-group btn-group-toggle firstRowOfButtons" data-toggle="buttons">
+    <label class="postButton btn btn-secondary active" id="ownButton">
+      <input type="radio" name="options" autocomplete="off" (click)="clickOwn()"> Own
+    </label>
+    <label class="btn btn-secondary postButton" id="likeButton">
+      <input type="radio" name="options" autocomplete="off" (click)="clickLiked()"> Liked
+    </label>
+    <label class="btn btn-secondary postButton" id="dislikeButton">
+      <input type="radio" name="options" autocomplete="off" (click)="clickDisliked()"> Disliked
+    </label>
+  </div> 
+
+  <br/>
+
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="postButton btn btn-secondary active" id="postButtonId">
+      <input type="radio" name="options" autocomplete="off" (click)="clickShowPosts()"> Posts
+    </label>
+    <label class="btn btn-secondary postButton" id="commentButtonId">
+      <input type="radio" name="options" autocomplete="off" (click)="clickShowComments()"> Comments
+    </label>
+  </div>
+
+
+</div>
+
+<div *ngIf="postClicked && ownClicked" class="ownPostContainer">
+  <div *ngFor="let post of posts">
+    <div id="ownPost{{post.id}}">
+      <img class="deleteImg" src="{{'../../../assets/delete.png'}}" (click)="clickDeletePost(post)"/>
+      <app-homepost [post]="post"></app-homepost>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="postClicked && likedClicked">
+  <div *ngFor="let post of likedPosts">
+    <app-homepost [post]="post"></app-homepost>
+  </div>
+</div>
+
+<div *ngIf="postClicked && !likedClicked && !ownClicked">
+  <div *ngFor="let post of dislikedPosts">
+    <app-homepost [post]="post"></app-homepost>
+  </div>
+</div> 
+ 
+<br/>
+<br/>
+<br/>
+<br/>
+
+

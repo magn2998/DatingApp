@@ -32,6 +32,22 @@ namespace DatingApp.API.Controllers
 
             var postsToReturn = _mapper.Map<IEnumerable<PostToReturnDto>>(posts);
 
+            int likesCounter_;
+            int dislikeCounter_;
+
+            foreach (var post in postsToReturn)
+            {
+                likesCounter_ = 0;
+                dislikeCounter_ = 0;
+                foreach (var postLike in post.PostLikers)
+                {
+                    if(postLike.Reaction == "like") likesCounter_++;
+                    if(postLike.Reaction == "dislike") dislikeCounter_++;
+                }
+                post.dislikeCounter = dislikeCounter_;
+                post.likesCounter = likesCounter_;
+            }
+
             return postsToReturn;
         }
 
@@ -43,6 +59,17 @@ namespace DatingApp.API.Controllers
             if(post == null) {return null; }
 
             var postToReturn = _mapper.Map<PostToReturnDto>(post);
+
+            int likesCounter_ = 0;
+            int dislikeCounter_ = 0;
+
+            foreach (var action in postToReturn.PostLikers)
+            {
+                if(action.Reaction == "like") likesCounter_++;
+                if(action.Reaction == "dislike") dislikeCounter_++;
+            }
+            postToReturn.likesCounter = likesCounter_;
+            postToReturn.dislikeCounter = dislikeCounter_;
 
             return postToReturn;
         }
@@ -89,28 +116,6 @@ namespace DatingApp.API.Controllers
 
         }
 
-        [HttpPost("{profileId}/{id}")]
-        public async Task<IActionResult> DeletePost(int profileId, int id) 
-        {
-            if (profileId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) 
-            {
-                return Unauthorized();
-            }
-
-            var PostFromRepo = await _repo.GetPost(id);
-
-            // IMPLEMENT DELETE POST COMMENTS
-
-            if(PostFromRepo == null) { return NotFound(); }
-
-            _repo.Delete(PostFromRepo);
-
-            if(await _repo.SaveAll()) { return Ok("Succesfully Deleted The Post"); }
-
-            return BadRequest("Failed to delete Post");
-
-        }
-
         [HttpPost("action/{profileId}/{actionId}/{id}")]
         public async Task<IActionResult> LikePost(int profileId, int id, int actionId)
         {
@@ -150,6 +155,37 @@ namespace DatingApp.API.Controllers
 
             return BadRequest("Failed to " + action + " Post");
             
+        }
+
+        [HttpDelete("{profileId}/delete/{postId}")]
+        public async Task<IActionResult> DeletePost(int profileId, int postId) 
+        {
+            if (profileId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) 
+            {
+                return Unauthorized();
+            }
+
+            var post = await _repo.GetPost(postId);
+
+            if(post == null) {
+                return NotFound();
+            }
+
+            if (post.ProfileId != profileId) { return Unauthorized(); }
+
+            foreach (var like in post.PostLikers)
+            {
+                _repo.Delete(like);
+            }
+
+            _repo.Delete(post);
+
+            if (await _repo.SaveAll()) {
+                return Ok();
+            }
+
+            return BadRequest();
+
         }
 
     }

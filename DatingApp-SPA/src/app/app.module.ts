@@ -43,6 +43,10 @@ import { PostCreationResolver } from './_resolvers/postcreation.resolver';
 import { PostResolver } from './_resolvers/post.resolver';
 import { PostCardComponent } from './postCard/postCard.component';
 import { HomepostComponent } from './homepost/homepost.component';
+import { ProfileEditComponent } from './profileEdit/profileEdit.component';
+import { ProfileEditResolver } from './_resolvers/profile-edit.resolve';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileResovler } from './_resolvers/profile.resolver';
 
 
 
@@ -81,7 +85,9 @@ export class CustomHammerConfig extends HammerGestureConfig  {
       PostsComponent,
       PostCreationComponent,
       PostCardComponent,
-      HomepostComponent
+      HomepostComponent,
+      ProfileEditComponent,
+      ProfileComponent
    ],
    imports: [
       BrowserModule,
@@ -113,8 +119,10 @@ export class CustomHammerConfig extends HammerGestureConfig  {
       UserService,
       MemberDetailResolver,
       PostCreationResolver,
+      ProfileResovler,
       PostResolver,
       MessagesResolver,
+      ProfileEditResolver,
       ListsResolver,
       MemberEditResolver,
       PreventUnsavedChanges,

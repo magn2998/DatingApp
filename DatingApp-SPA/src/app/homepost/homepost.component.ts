@@ -3,6 +3,7 @@ import { Post } from '../_models/post';
 import { ProfileService } from '../_services/profile.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { ProfauthService } from '../_services/profauth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepost',
@@ -14,10 +15,12 @@ export class HomepostComponent implements OnInit {
   @Input() likedPosts: Array<any>;
   score = 0;
 
-  constructor(private profileService: ProfileService, private profauthService: ProfauthService, private alerifyService: AlertifyService) { }
+  constructor(private profileService: ProfileService, private profauthService: ProfauthService,
+              private alerifyService: AlertifyService, private router: Router) { }
 
   ngOnInit() {
-    console.log(this.post);
+    // console.log(this.post);
+    console.log('profileBruh' + this.post.id);
     if (this.post.content.length > 55) {
       this.post.content = this.post.content.substring(0, 55) + '(...)';
     }
@@ -65,4 +68,13 @@ export class HomepostComponent implements OnInit {
     }
   }
 
+  clickProfile() {
+    this.router.navigate(['profile/' + this.post.profileId]);
+  }
+
+  clickPost() {
+    this.router.navigate(['post/' + this.post.id]);
+  }
 }
+
+

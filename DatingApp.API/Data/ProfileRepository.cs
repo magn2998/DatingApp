@@ -93,6 +93,8 @@ namespace DatingApp.API.Data
         public async Task<Profiles> getProfile(int profileId) 
         {
             var profile = await _context.Profiles.FirstOrDefaultAsync(x => x.Id == profileId);
+            profile.Posts = profile.Posts.OrderByDescending(d => d.Created).ToList();
+             
             return profile;
         }
 

@@ -1,7 +1,15 @@
-<h1>Title: {{post?.title}}</h1>
+<div class="postContainer">
+  <div class="titleContentLeft">
+    <p style="margin-left: 10px; display:inline;"><a (click)="clickPost()" class="postTitle">{{post?.title}}</a></p>
+  </div>
+  <div class="titleContentRight">
+    <p class="vote" *ngIf="post?.profileAction == null"> <a (click)="clickOp()">Like</a> | <a (click)="clickDown()">Dislike</a></p>
+    <p class="vote" *ngIf="post?.profileAction == 'dislike'"> <a (click)="clickOp()">Like</a> | <a (click)="clickDown()" style="color: blue">Dislike</a></p>
+    <p class="vote" *ngIf="post?.profileAction == 'like'"> <a (click)="clickOp()" style="color: green">Like</a> | <a (click)="clickDown()">Dislike</a></p>
+  </div>
 
-<p (click)="click()">
-  Content: {{post?.content}}
-</p>
+  <p class="pointScore"> {{post?.likesCounter - post?.dislikeCounter}} </p>
+  <p class="contentContainer">{{post?.content}}</p>
+  <p class="contNekstraP"> <a (click)="clickProfile()">{{post?.profileProfileName}}</a> || {{post?.created | date:"dd/MM/yyyy"}}</p>
 
-<p>Section: {{post?.section}}</p>
+</div>

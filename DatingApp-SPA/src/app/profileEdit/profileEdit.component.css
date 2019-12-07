@@ -1,0 +1,51 @@
+.container {
+    text-align: center;
+}
+
+.container h1{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.container img {
+    max-height: 200px;
+    border: 2px solid black;
+}
+
+.container textarea {
+    width: 350px;
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+.container button {
+    position: absolute;
+    margin-top: 34px;
+    margin-left: 10px;
+}
+
+.postButton {
+    width: 130px;
+}
+
+.firstRowOfButtons {
+    margin-bottom: 20px;
+}
+
+.contentTitle { 
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.deleteImg {
+    max-height: 40px;
+    position: absolute;
+    margin-top: 12px;
+    margin-left: 20%;
+}
+
+.deleteImg:hover {
+    cursor: pointer;
+} 
+

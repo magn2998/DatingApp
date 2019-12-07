@@ -19,6 +19,7 @@ export class PostsComponent implements OnInit {
     this.route.data.subscribe(data => {
       if (data.profile) {
         this.post = data.profile;
+        console.log(this.post);
       } else {
         this.alertify.error('This post doesnt exist');
         this.router.navigate(['']);
@@ -27,9 +28,23 @@ export class PostsComponent implements OnInit {
   }
 
   click() {
-    this.profileService.getPost(163).subscribe(res => {
+    this.profileService.getPost(12).subscribe(res => {
       console.log(res);
     });
+  }
+
+  clickOp() {
+
+  }
+
+  clickDown() {
+
+  }
+  clickProfile() {
+
+  }
+  clickPost() {
+    console.log('post');
   }
 
 }

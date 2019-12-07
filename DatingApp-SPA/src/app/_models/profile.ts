@@ -3,7 +3,8 @@ export interface Profile {
     username: string;
     profileName: string;
     created: Date;
-    lastActive: any;
+    lastActive?: any;
     profileDescription?: string;
     postLikes: any[];
+    posts: any[];
 }

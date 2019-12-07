@@ -22,7 +22,7 @@ export class FrontpageComponent implements OnInit {
   ngOnInit() {
     this.profileService.getPosts('forum').subscribe((res: Post[]) => {
       this.prePosts = res;
-      console.log(this.posts);
+      console.log(this.prePosts);
     }, null, () => {
       if (this.profauthService.loggedIn()) {
         this.profileService.getLikedPosts(this.profauthService.decodedToken.nameid).subscribe((res: Array<any>) => {

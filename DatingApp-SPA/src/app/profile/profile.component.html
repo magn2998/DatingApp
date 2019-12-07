@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>{{profile?.profileName}}</h1>
+  <br/>
+  <div class="img"><img src="{{'../../../assets/user.png'}}"></div>
+  <p>{{profile?.profileDescription}}</p>
+
+  <h5 class="contentTitle">Posts</h5>
+
+
+</div>
+
+<div *ngFor="let post of posts">
+  <div id="dddd">
+    <app-homepost [post]="post"></app-homepost>
+  </div>
+</div>

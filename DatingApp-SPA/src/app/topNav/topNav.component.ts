@@ -63,4 +63,8 @@ model: any = {};
     this.router.navigate(['']);
   }
 
+  goToEditProfile() {
+    this.router.navigate(['/editprofile']);
+  }
+
 }

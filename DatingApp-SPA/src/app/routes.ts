@@ -18,18 +18,27 @@ import { PostCreationComponent } from './postCreation/postCreation.component';
 import { PostCreationResolver } from './_resolvers/postcreation.resolver';
 import { PostResolver } from './_resolvers/post.resolver';
 import { PostsComponent } from './posts/posts.component';
+import { ProfileEditComponent } from './profileEdit/profileEdit.component';
+import { ProfileEditResolver } from './_resolvers/profile-edit.resolve';
+import { ProfileComponent } from './profile/profile.component';
+import { resolve } from 'url';
+import { ProfileResovler } from './_resolvers/profile.resolver';
 
 export const appRoutes: Routes = [
     {path: '', component: FrontpageComponent},
     {path: 'register', component: ProfregisterComponent},
+    {path: 'profile/:id', component: ProfileComponent,
+        resolve: {profile: ProfileResovler}},
+    {path: 'post/:id', component: PostsComponent, resolve: {profile: PostResolver}},
     {
         path: '',
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children: [
+            {path: 'editprofile', component: ProfileEditComponent,
+                resolve: {profile: ProfileEditResolver}},
             {path: 'createPost', component: PostCreationComponent,
                 resolve: {profile: PostCreationResolver}},
-            {path: 'post/:id', component: PostsComponent, resolve: {profile: PostResolver}},
             {path: 'members', component: MemberListComponent, resolve: {users: MemberListResolver}},
             {path: 'member/edit', component: MemberEditComponent,
                 resolve: {user: MemberEditResolver}, canDeactivate: [PreventUnsavedChanges]},

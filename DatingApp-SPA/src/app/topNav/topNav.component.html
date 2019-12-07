@@ -18,7 +18,7 @@
     <div class="dropdown1" style="margin-bottom: 0px" *ngIf="loggedIn()">
       <p class="dropbtn1">Welcome {{profauthService.decodedToken.family_name | titlecase}}</p>
       <div class="dropdown-content1">
-        <a style="border-top: 2px solid black" href="#">Edit Profile</a>
+        <a style="border-top: 2px solid black" (click)="goToEditProfile()">Edit Profile</a>
         <a (click)="logout()">Logout</a>
       </div>
     </div>

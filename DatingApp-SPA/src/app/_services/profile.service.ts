@@ -39,4 +39,16 @@ getLikedPosts(profileId: number) {
   return this.http.get(this.baseUrl + 'posts/' + profileId + '/likedposts');
 }
 
+getProfileEdit() {
+  return this.http.get(this.baseUrl + 'profile/edit');
+}
+
+updateProfileDescription(newDescription: any) {
+  return this.http.post(this.baseUrl + 'profile/updateDescription', newDescription);
+}
+
+deletePost(profileId: number, postId: number) {
+  return this.http.delete(this.baseUrl + 'posts/' + profileId + '/delete/' + postId);
+}
+
 }

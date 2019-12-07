@@ -8,6 +8,7 @@ using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
 using DatingApp.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -35,6 +36,7 @@ namespace DatingApp.API.Controllers
             var profile = await _repo.getProfile(id);
 
             var profileToReturn = _mapper.Map<ProfileToReturnDto>(profile);
+
 
             return Ok(profileToReturn);
         }
@@ -94,6 +96,36 @@ namespace DatingApp.API.Controllers
             {
                 token = tokenHandler.WriteToken(token),
             });
+        }
+
+        [Authorize]
+        [HttpGet("edit")]
+        public async Task<IActionResult> editProfile() 
+        {
+            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var profile = await _repo.getProfile(id);
+
+            var profileToReturn = _mapper.Map<ProfileDetailedToReturn>(profile);
+
+            return Ok(profileToReturn);
+        }
+
+        [Authorize] 
+        [HttpPost("updateDescription")]
+        public async Task<IActionResult> updateProfileDesciption(UpdatedDescription description) 
+        {
+            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var profile = await _repo.getProfile(id);
+
+            profile.ProfileDescription = description.description;
+
+            if (await _repo.SaveAll()) {
+                return Ok();
+            } 
+
+            return BadRequest();
+
+
         }
     }
 }
